@@ -1,0 +1,22 @@
+generated: '2026-09-02'
+method: generated
+source: >-
+  openapi/unlock-site-content-api-openapi.yml and openapi/unlock-editorial-api-openapi.yml — every
+  operationId referenced in these skills exists in one of those two documents
+note: >-
+  Unlock publishes no skills, no AGENTS.md and no agent-facing documentation; these were written by
+  API Evangelist against the derived contracts in this repository. They cover the only two flows the
+  public surface actually supports, both read-only.
+skills:
+- name: unlock-hea-eligibility-lookup
+  file: unlock-hea-eligibility-lookup.md
+  api: Unlock Site Content API
+  summary: Check state availability and read the FAQ before answering a home equity agreement question.
+  operations: [getUnlockV1ActiveStates, getUnlockV1Company, getUnlockV1Faq, getUnlockV1FaqCategories]
+  read_only: true
+- name: unlock-content-research
+  file: unlock-content-research.md
+  api: Unlock Editorial API
+  summary: Search and attribute Unlock's own editorial archive on a home-equity topic.
+  operations: [getWpV2Search, getWpV2Posts, getWpV2PostsById, getWpV2Articles, getWpV2Stories, getWpV2Categories, getWpV2Authors]
+  read_only: true

@@ -1,0 +1,75 @@
+generated: '2026-09-02'
+method: probed
+source: >-
+  https://www.unlock.com/wp-json/ route index (2026-09-02), https://unlock.statuspage.io/ (2026-09-02),
+  https://www.unlock.com/sitemap.xml, and derived from the two OpenAPI files in openapi/
+note: >-
+  Every lifecycle guarantee an integrator would want is absent here, and that absence is the finding.
+  Unlock runs no developer program, so it publishes no versioning policy, no deprecation policy, no
+  Sunset/Deprecation header commitment, no SLA and no working status page. Nothing below is inferred
+  from marketing copy — each row is either something the surface itself exposes or a probe that missed.
+versioning:
+  scheme: namespace-in-path
+  policy_published: false
+  current_versions:
+  - namespace: unlock/v1
+    routes: 20
+    status: active
+  - namespace: unlock/v2
+    routes: 2
+    status: active
+    note: Additive alongside v1, carrying only /disclosures. v1 was not retired when v2 appeared.
+  - namespace: unlk/v1
+    routes: 3
+    status: active
+    note: A second first-party namespace holding only the education-progress save/restore pair.
+  - namespace: wp/v2
+    status: active
+    note: WordPress core content namespace, versioned by WordPress, not by Unlock.
+  discovery: https://www.unlock.com/wp-json/
+deprecation:
+  policy_published: false
+  policy_url: null
+  sunset_header: false
+  deprecation_header: false
+  deprecated_operations: []
+  detail: >-
+    No RFC 8594 Sunset or Deprecation header was returned on any probed response, and no operation
+    in either OpenAPI is marked deprecated. No Deprecation pointer is emitted.
+status_page:
+  published: false
+  url: null
+  evidence:
+  - url: https://unlock.statuspage.io/
+    status: 200
+    body: 'unlock Status - Page Inactive'
+    detail: >-
+      A Statuspage subdomain resolves but the page is inactive — it is not Unlock's status page and
+      may not even be their reservation. status.unlock.com does not resolve (NXDOMAIN).
+  - url: https://status.unlock.com/
+    status: 0
+    detail: NXDOMAIN.
+  note: No StatusPage pointer is emitted; nothing is served.
+sla:
+  published: false
+  url: null
+support:
+  channel: https://support.unlock.com/
+  platform: Freshservice
+  detail: Consumer support desk for homeowners. There is no developer support channel.
+changelog:
+  published: false
+  detail: >-
+    Unlock publishes a marketing blog at https://www.unlock.com/blog/ but no dated product or API
+    changelog, and no release notes. No ChangeLog pointer is emitted.
+stability_signals:
+  first_party_namespace_age: >-
+    The unlock/v1 namespace and the custom faq/testimonials content types predate this capture; the
+    route index gives no registration dates, so no age can be asserted.
+  infrastructure: Pantheon origin behind a Fastly edge (X-Pantheon-Styx-Hostname, X-Served-By).
+  dangling_hostname:
+    host: partners.unlock.com
+    status: 530
+    detail: >-
+      Cloudflare error 1016 (origin DNS error) on every path — a partner hostname that resolves in
+      DNS but has no working origin behind it.

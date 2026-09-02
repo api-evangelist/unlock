@@ -1,18 +1,109 @@
 aid: unlock
 name: Unlock
-description: 'Unlock is a company surfaced via the API Evangelist harvest backlog (source: secondary-market)
-  and added to the network as a stub for full-pipeline profiling.'
+description: >-
+  Unlock Technologies, Inc. is a Tempe, Arizona fintech founded in 2020 by Jim Riccitelli, Dan Foster
+  and Ryan Craft, with a branch office in Troy, Michigan. Its flagship product is the home equity
+  agreement (HEA) — a homeowner receives a lump sum today, from $15,000 up to $500,000, in exchange
+  for a share of the home's future value, with no monthly payments and no interest, settled when the
+  home is sold or refinanced or at the end of the ten-year term. Unlock charges an origination fee of
+  up to 4.9% of the amount advanced, takes a share of the property capped at 49.9%, and caps its own
+  return at 19.9% per year. The company is licensed in 26 US states and has raised roughly $52.6M in
+  equity; its Series B included a $30M equity investment from D2 Asset Management, with Saluda Grade,
+  Second Century Ventures and REACH also participating. Unlock sells to homeowners, not to developers: it publishes no
+  developer program, no API reference, no SDKs, no key issuance and no partner API. The only
+  machine-readable interfaces it exposes are the first-party WordPress REST namespaces behind
+  www.unlock.com — `unlock/v1`, `unlock/v2` and `unlk/v1`, custom endpoints written for Unlock rather
+  than WordPress core routes — plus the core `wp/v2` editorial content API. Both are captured here
+  for discovery, are anonymously readable, and are read-only without credentials.
 url: https://raw.githubusercontent.com/api-evangelist/unlock/refs/heads/main/apis.yml
+image: https://www.unlock.com/app/uploads/logo-footer-1.svg
 x-type: company
 x-source: harvest:secondary-market
-x-tier: stub
-x-tier-reason: harvest
 specificationVersion: '0.20'
 created: '2026-09-02'
 modified: '2026-09-02'
 tags:
 - Company
-apis: []
+- Financial Services
+- FinTech
+- Home Equity
+- Mortgage
+- Real Estate
+- Consumer Lending
+- Home Equity Agreement
+- Personal Finance
+- Content
+apis:
+- aid: unlock:unlock-site-content-api
+  name: Unlock Site Content API
+  description: >-
+    The first-party REST namespaces Unlock registers on www.unlock.com — `unlock/v1`, `unlock/v2` and
+    `unlk/v1`. These are custom endpoints written for Unlock, not WordPress core routes, and they
+    serve the company blurb and Tempe address, the 26 active states where the HEA is offered, legal
+    disclaimers and footer disclosures, social profiles, logo assets, navigation menus by location,
+    145 FAQ entries and their categories, 8 homeowner testimonials, and the Unlock Learn curriculum.
+    Anonymous access is read-only and needs no credential; the write methods the route index also
+    advertises require a WordPress application password.
+  humanURL: https://www.unlock.com/wp-json/unlock/v1
+  baseURL: https://www.unlock.com/wp-json
+  tags:
+  - Company
+  - FAQ
+  - Testimonials
+  - Education
+  - Content
+  properties:
+  - type: OpenAPI
+    url: openapi/unlock-site-content-api-openapi.yml
+  - type: Overlay
+    url: overlays/unlock-site-content-api-overlay.yaml
+  - type: Examples
+    url: examples/unlock-active-states.json
+  - type: Examples
+    url: examples/unlock-company.json
+  - type: Examples
+    url: examples/unlock-social.json
+  - type: Examples
+    url: examples/unlock-logos.json
+  - type: Examples
+    url: examples/unlock-faq-categories.json
+  - type: Examples
+    url: examples/unlock-education-topics.json
+  - type: Examples
+    url: examples/unlock-education-lessons.json
+  - type: Examples
+    url: examples/unlock-menus-primary.json
+- aid: unlock:unlock-editorial-api
+  name: Unlock Editorial API
+  description: >-
+    Anonymous read access to the Unlock editorial archive through the WordPress core `wp/v2`
+    namespace — 251 blog posts, 24 pages, 778 media items, 9 Learn articles, 13 homeowner stories,
+    6 education topics, 1 lesson and 11 bylined authors, plus the categories, tags and
+    education-category taxonomies, cross-type search, and the self-describing type and status
+    metadata. Read-only without credentials.
+  humanURL: https://www.unlock.com/wp-json/wp/v2
+  baseURL: https://www.unlock.com/wp-json
+  tags:
+  - Posts
+  - Articles
+  - Stories
+  - Media
+  - Taxonomies
+  - Search
+  - Content
+  properties:
+  - type: OpenAPI
+    url: openapi/unlock-editorial-api-openapi.yml
+  - type: Overlay
+    url: overlays/unlock-editorial-api-overlay.yaml
+  - type: Examples
+    url: examples/unlock-types.json
+  - type: Examples
+    url: examples/unlock-taxonomies.json
+  - type: Examples
+    url: examples/unlock-statuses.json
+  - type: Examples
+    url: examples/unlock-categories.json
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
@@ -20,4 +111,76 @@ maintainers:
   email: info@apis.io
 common:
 - type: Website
-  url: https://forgeglobal.com/unlock_stock/
+  url: https://www.unlock.com/
+- type: About
+  url: https://www.unlock.com/about/
+- type: Blog
+  url: https://www.unlock.com/blog/
+- type: Support
+  url: https://support.unlock.com/
+- type: HelpCenter
+  url: https://www.unlock.com/resources/faqs/
+- type: Pricing
+  url: https://www.unlock.com/what-it-costs/
+- type: SignUp
+  url: https://app.unlock.com/signup
+- type: Login
+  url: https://app.unlock.com/login
+- type: TermsOfService
+  url: https://www.unlock.com/legal/terms-of-use/
+- type: PrivacyPolicy
+  url: https://www.unlock.com/legal/privacy-policy/
+- type: GitHubOrganization
+  url: https://github.com/unlock-com
+- type: Careers
+  url: https://www.unlock.com/careers/
+- type: Authentication
+  url: authentication/unlock-authentication.yml
+- type: Conventions
+  url: conventions/unlock-conventions.yml
+- type: ErrorCatalog
+  url: errors/unlock-problem-types.yml
+- type: DataModel
+  url: data-model/unlock-data-model.yml
+- type: Lifecycle
+  url: lifecycle/unlock-lifecycle.yml
+- type: Conformance
+  url: conformance/unlock-conformance.yml
+- type: RateLimits
+  url: rate-limits/unlock-rate-limits.yml
+- type: Plans
+  url: plans/unlock-plans-pricing.yml
+- type: DomainSecurity
+  url: security/unlock-domain-security.yml
+- type: LLMsTxt
+  url: llms/unlock-llms.txt
+- type: Packages
+  url: packages/unlock-packages.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: ToolCrosswalk
+  url: mcp/unlock-tool-crosswalk.yml
+
+x-enrichment:
+  date: '2026-09-02'
+  status: enriched
+  artifacts_added: 33
+  pass: local-v1
+x-coverage:
+  state: covered
+  reason: covered
+  detail: >-
+    Unlock Technologies runs no developer program — no portal, reference, SDK, key issuance or
+    partner API — but it does serve two anonymously readable, undocumented first-party REST surfaces
+    on www.unlock.com, and the WordPress route index behind them publishes a full argument schema
+    per route, which is what every contract in this profile was derived from.
+  evidence:
+  - url: https://www.unlock.com/wp-json/
+    status: 200
+  - url: https://www.unlock.com/wp-json/unlock/v1/active-states
+    status: 200
+  - url: https://www.unlock.com/llms.txt
+    status: 404
+  - url: https://www.unlock.com/.well-known/security.txt
+    status: 404
+  checked: '2026-09-02'

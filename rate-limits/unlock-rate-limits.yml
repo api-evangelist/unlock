@@ -1,0 +1,39 @@
+generated: '2026-09-02'
+method: probed
+source: https://www.unlock.com/wp-json/wp/v2/posts?per_page=2 (response headers observed 2026-09-02)
+docs: null
+limit_count: 0
+note: >-
+  Unlock publishes no rate limits and no developer documentation of any kind, so there is no
+  documented limit to record. A live unauthenticated response was inspected directly: it returns no
+  RateLimit-*, X-RateLimit-* or Retry-After header, and no 429 was observed. The only runtime
+  quota-shaped signals the surface returns are the WordPress pagination bound (per_page must be
+  between 1 and 100, enforced with HTTP 400 rest_invalid_param / rest_out_of_bounds) and the CDN
+  cache-control window in front of it.
+limits: []
+response_headers:
+  rate_limit_headers_present: false
+  observed:
+  - name: X-WP-Total
+    value_example: '251'
+    meaning: Total items in the collection, exposed via Access-Control-Expose-Headers.
+  - name: X-WP-TotalPages
+    value_example: '126'
+    meaning: Total pages at the requested per_page size.
+  - name: Link
+    value_example: '<https://www.unlock.com/wp-json/wp/v2/posts?per_page=2&page=2>; rel="next"'
+    meaning: RFC 8288 pagination link relations (next / prev).
+  - name: Cache-Control
+    value_example: 'public, max-age=604800'
+    meaning: Seven-day public cache window served by the Fastly/Pantheon edge in front of the origin.
+  - name: Allow
+    value_example: GET
+    meaning: Anonymous callers are told read-only; write methods require a WordPress application password.
+  exhaustion_status: null
+enforcement:
+  pagination_bound:
+    parameter: per_page
+    minimum: 1
+    maximum: 100
+    status_on_violation: 400
+    error_code: rest_invalid_param

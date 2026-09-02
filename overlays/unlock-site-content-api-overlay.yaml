@@ -1,0 +1,61 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements — Unlock Site Content API
+  version: 1.0.0
+extends: ../openapi/unlock-site-content-api-openapi.yml
+x-generated: '2026-09-02'
+x-method: generated
+x-source: >-
+  Derived from live probes of https://www.unlock.com/wp-json/ on 2026-09-02 and from
+  conventions/unlock-conventions.yml, errors/unlock-problem-types.yml and
+  rate-limits/unlock-rate-limits.yml in this repository.
+x-note: >-
+  These are API Evangelist's annotations, not Unlock's. The base document is itself derived from
+  the provider's own published route index; this overlay records only what our probes added on top
+  of it, so the original stays separable from our commentary.
+actions:
+- target: $.info
+  description: Record that this profile is third-party and that the surface carries no provider documentation.
+  update:
+    x-api-evangelist-profile: https://apis.io/provider/unlock
+    x-provider-documentation: none
+    x-anonymous-read: true
+    x-verified-on: '2026-09-02'
+- target: $.info
+  description: Attach the observed runtime conventions so a client does not have to rediscover them.
+  update:
+    x-pagination:
+      style: page-number
+      parameters: [page, per_page, offset]
+      per_page_max: 100
+      headers: [X-WP-Total, X-WP-TotalPages, Link]
+    x-rate-limits:
+      documented: false
+      headers_present: false
+    x-error-format: wordpress-rest-error
+    x-reversibility: na
+- target: $.paths['/unlock/v1/active-states'].get
+  description: Note the business meaning of this endpoint, which the route index does not carry.
+  update:
+    x-business-meaning: >-
+      The authoritative list of US states in which Unlock's home equity agreement is currently
+      offered. 26 states at capture on 2026-09-02.
+    x-example-response: ../examples/unlock-active-states.json
+- target: $.paths['/unlock/v1/company'].get
+  description: Note the corporate identity fields this endpoint returns.
+  update:
+    x-example-response: ../examples/unlock-company.json
+- target: $.paths['/unlock/v2/disclosures'].get
+  description: Warn that this route breaks the content type of the rest of the surface.
+  update:
+    x-response-note: >-
+      Returns an HTML fragment (footer disclosure markup with an inline <style> block), not JSON.
+      It is the only non-JSON response on this API.
+- target: $.paths['/unlk/v1/education/restore'].get
+  description: Record the probed failure mode for the one route that does not answer 200 anonymously.
+  update:
+    x-probe:
+      status: 400
+      code: rest_missing_callback_param
+      detail: The email parameter is required; the route returns 400 without it.
+      observed: '2026-09-02'

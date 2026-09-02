@@ -1,0 +1,99 @@
+generated: '2026-09-02'
+method: derived
+source: >-
+  openapi/unlock-site-content-api-openapi.yml, openapi/unlock-editorial-api-openapi.yml,
+  errors/unlock-problem-types.yml, conventions/unlock-conventions.yml, and live probes of
+  https://www.unlock.com/wp-json/ on 2026-09-02
+note: >-
+  Unlock claims no standards conformance anywhere on its public site — there is no developer
+  documentation in which to make such a claim — so every row below is an observation against the
+  live surface, not a repetition of a provider assertion. Consumer-facing regulatory disclosures
+  (state lending licences, Equal Housing Opportunity, BBB) are recorded separately under
+  regulatory_disclosures because they are company licensing, not API conformance, and they must
+  never be read as a compliance certification programme. No Compliance pointer is emitted.
+conformance:
+- id: oauth2
+  conforms: false
+  evidence: >-
+    No oauth2 securityScheme in either OpenAPI, and /.well-known/oauth-authorization-server returns
+    404 on every Unlock host. The only scheme the deployment advertises is HTTP Basic via a
+    WordPress application password.
+- id: oidc
+  conforms: false
+  evidence: /.well-known/openid-configuration returns 404 on www.unlock.com, app.unlock.com and support.unlock.com.
+- id: rfc9457
+  conforms: false
+  evidence: >-
+    Errors are served as application/json with the WordPress envelope (code/message/data.status).
+    No application/problem+json, no type URI, no title, no instance. See errors/unlock-problem-types.yml.
+- id: rfc8288
+  conforms: true
+  evidence: >-
+    Collection responses return a Link header with rel="next"/"prev", e.g.
+    '<https://www.unlock.com/wp-json/wp/v2/posts?per_page=2&page=2>; rel="next"', observed 2026-09-02.
+- id: pagination
+  conforms: true
+  evidence: >-
+    page/per_page/offset query parameters with a 1..100 bound on per_page, plus X-WP-Total and
+    X-WP-TotalPages response headers exposed through Access-Control-Expose-Headers.
+- id: idempotency
+  conforms: na
+  evidence: "No anonymous write surface; anonymous callers receive 'Allow: GET'."
+- id: cors
+  conforms: true
+  evidence: >-
+    Access-Control-Allow-Headers and Access-Control-Expose-Headers are returned on collection
+    responses, so a browser client can read pagination headers cross-origin.
+- id: hsts
+  conforms: true
+  evidence: 'strict-transport-security: max-age=31622400; includeSubDomains; preload on www.unlock.com.'
+- id: oembed
+  conforms: true
+  evidence: >-
+    The deployment registers the oembed/1.0 namespace in its route index, so Unlock content is
+    embeddable by any oEmbed consumer.
+- id: wordpress-rest-api
+  conforms: true
+  evidence: >-
+    The surface is a WordPress REST API deployment. Its route index is self-describing — every
+    route publishes its namespace, methods and per-argument schema — which is what made the two
+    OpenAPI files in openapi/ derivable without guessing.
+- id: rfc9116
+  conforms: false
+  evidence: /.well-known/security.txt returns 404 on every Unlock host. See well-known/unlock-well-known.yml.
+domain_standards:
+  market: US residential home equity / mortgage-adjacent consumer finance
+  shortlist_probed:
+  - id: mismo
+    name: MISMO (Mortgage Industry Standards Maintenance Organization) v3.x XML
+    declared: false
+    evidence: >-
+      No MISMO namespace, message type or schema reference appears in either contract or anywhere
+      on the public site. Unlock's public surface is content, not loan data, so there is nothing
+      for a mortgage data standard to attach to.
+  - id: fdx
+    name: Financial Data Exchange (FDX) API
+    declared: false
+    evidence: No FDX endpoint, scope or schema is exposed or referenced.
+  - id: iso20022
+    name: ISO 20022
+    declared: false
+    evidence: No payment or messaging surface is exposed.
+  finding: >-
+    No domain standard is declared, and none is expected: the only public contract is a content API.
+    This is a reward-only dimension, so its absence is recorded rather than penalised.
+regulatory_disclosures:
+  note: >-
+    Company licensing and consumer disclosures, NOT API compliance certifications. Recorded because
+    they are the only compliance-shaped material Unlock publishes, and to make clear that no SOC 2,
+    ISO 27001, PCI or HIPAA programme was found.
+  state_licences:
+    url: https://www.unlock.com/legal/licenses/
+    status: 200
+    detail: State-by-state lending and servicing licence disclosures.
+  equal_housing_opportunity:
+    evidence: EHO mark served at https://www.unlock.com/app/uploads/eho.svg via /unlock/v1/logos.
+  better_business_bureau:
+    evidence: BBB mark served at https://www.unlock.com/app/uploads/bbb-footer.svg via /unlock/v1/logos.
+  security_certifications_found: []
+  trust_center: null

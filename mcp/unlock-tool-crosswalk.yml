@@ -1,0 +1,164 @@
+generated: '2026-09-02'
+method: derived
+source: mcp/unlock-mcp.yml, openapi/unlock-site-content-api-openapi.yml, openapi/unlock-editorial-api-openapi.yml
+note: >-
+  Unlock ships no MCP server and no GraphQL surface, so this crosswalk binds the CANDIDATE tools in
+  mcp/unlock-mcp.yml to the REST operations they would call. Confidence is high on every row only
+  because both sides were authored from the same derived OpenAPI; it does not mean a server exists.
+  rest_only[] is the useful half: it shows how much of the content surface a minimal agent tool set
+  would leave unreachable.
+surfaces:
+  openapi:
+  - file: openapi/unlock-site-content-api-openapi.yml
+    operations: 22
+    gated: false
+  - file: openapi/unlock-editorial-api-openapi.yml
+    operations: 30
+    gated: false
+  graphql: null
+  mcp:
+    url: null
+    status: does-not-exist
+crosswalk:
+- tool: list_active_states
+  category: company
+  rest: [getUnlockV1ActiveStates]
+  binding: one-to-one
+  confidence: high
+- tool: get_company_profile
+  category: company
+  rest: [getUnlockV1Company]
+  binding: one-to-one
+  confidence: high
+- tool: search_faq
+  category: faq
+  rest: [getUnlockV1Faq, getUnlockV1FaqCategories]
+  binding: composite
+  confidence: high
+  note: Category filtering requires resolving faq_categories ids first.
+- tool: get_faq_entry
+  category: faq
+  rest: [getUnlockV1FaqById]
+  binding: one-to-one
+  confidence: high
+- tool: list_testimonials
+  category: social-proof
+  rest: [getUnlockV1Testimonials]
+  binding: one-to-one
+  confidence: high
+- tool: browse_education
+  category: education
+  rest: [getUnlockV1Education, getUnlockV1EducationLessons, getUnlockV1EducationTopics]
+  binding: composite
+  confidence: high
+- tool: get_legal_disclosures
+  category: legal
+  rest: [getUnlockV1Disclaimer, getUnlockV2Disclosures]
+  binding: composite
+  confidence: medium
+  note: getUnlockV2Disclosures returns HTML, not JSON, so a tool would have to strip markup.
+- tool: search_content
+  category: content
+  rest: [getWpV2Search]
+  binding: one-to-one
+  confidence: high
+- tool: list_posts
+  category: content
+  rest: [getWpV2Posts]
+  binding: one-to-one
+  confidence: high
+- tool: get_post
+  category: content
+  rest: [getWpV2PostsById]
+  binding: one-to-one
+  confidence: high
+- tool: list_articles
+  category: content
+  rest: [getWpV2Articles]
+  binding: one-to-one
+  confidence: high
+- tool: list_homeowner_stories
+  category: content
+  rest: [getWpV2Stories]
+  binding: one-to-one
+  confidence: high
+mcp_only: []
+rest_only:
+- operation: getUnlockV1Social
+  reason: Social profile links; low agent value.
+- operation: getUnlockV1Logos
+  reason: Brand asset URLs; low agent value.
+- operation: getUnlockV1MenusByLocation
+  reason: Site navigation structure; presentation concern.
+- operation: getUnlockV1EducationLessonsBySlug
+  reason: Covered indirectly by browse_education.
+- operation: getUnlockV1EducationTopicsById
+  reason: Covered indirectly by browse_education.
+- operation: getUnlockV1FaqCategoriesById
+  reason: Covered indirectly by search_faq.
+- operation: getUnlockV1TestimonialsById
+  reason: Covered indirectly by list_testimonials.
+- operation: getUnlkV1EducationRestore
+  reason: Per-learner progress restore keyed on an email address; deliberately excluded from the tool set.
+- operation: getUnlockV1
+  reason: Namespace discovery document.
+- operation: getUnlockV2
+  reason: Namespace discovery document.
+- operation: getUnlkV1
+  reason: Namespace discovery document.
+- operation: getWpV2Pages
+  reason: No tool proposed.
+- operation: getWpV2PagesById
+  reason: No tool proposed.
+- operation: getWpV2Media
+  reason: No tool proposed.
+- operation: getWpV2MediaById
+  reason: No tool proposed.
+- operation: getWpV2ArticlesById
+  reason: No tool proposed.
+- operation: getWpV2StoriesById
+  reason: No tool proposed.
+- operation: getWpV2Lessons
+  reason: Duplicated by the unlock/v1 education projection.
+- operation: getWpV2LessonsById
+  reason: Duplicated by the unlock/v1 education projection.
+- operation: getWpV2Topics
+  reason: Duplicated by the unlock/v1 education projection.
+- operation: getWpV2TopicsById
+  reason: Duplicated by the unlock/v1 education projection.
+- operation: getWpV2Authors
+  reason: No tool proposed.
+- operation: getWpV2AuthorsById
+  reason: No tool proposed.
+- operation: getWpV2Categories
+  reason: Taxonomy lookup; folded into list_posts filtering.
+- operation: getWpV2CategoriesById
+  reason: Taxonomy lookup.
+- operation: getWpV2Tags
+  reason: Registered but empty on this deployment.
+- operation: getWpV2TagsById
+  reason: Registered but empty on this deployment.
+- operation: getWpV2EducationCategory
+  reason: Taxonomy lookup.
+- operation: getWpV2EducationCategoryById
+  reason: Taxonomy lookup.
+- operation: getWpV2Taxonomies
+  reason: Discovery metadata.
+- operation: getWpV2TaxonomiesByTaxonomy
+  reason: Discovery metadata.
+- operation: getWpV2Types
+  reason: Discovery metadata.
+- operation: getWpV2TypesByType
+  reason: Discovery metadata.
+- operation: getWpV2Statuses
+  reason: Discovery metadata.
+- operation: getWpV2StatusesByStatus
+  reason: Discovery metadata.
+- operation: getWpV2
+  reason: Namespace discovery document.
+coverage:
+  mcp_tools: 12
+  rest_operations: 52
+  bound_operations: 16
+  mcp_only: 0
+  rest_only: 36

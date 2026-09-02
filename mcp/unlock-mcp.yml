@@ -1,0 +1,89 @@
+generated: '2026-09-02'
+method: derived
+source: >-
+  openapi/unlock-site-content-api-openapi.yml and openapi/unlock-editorial-api-openapi.yml;
+  searched for a hosted or packaged Unlock MCP server on 2026-09-02 and found none
+status: candidate
+note: >-
+  Unlock ships NO MCP server. This is a candidate tool list derived from the operations of the two
+  content APIs profiled in this repository, offered as what a server would expose if one existed.
+  It is not installable and not callable — there is no endpoint and no package. Every tool below
+  maps to a real operationId in an OpenAPI in this repo; none is invented.
+deployment:
+  mode: none
+  endpoint: null
+  install: null
+  package: null
+  auth: none
+  verified: derived
+discovery:
+  searched:
+  - target: mcp.unlock.com
+    result: NXDOMAIN
+  - target: npm registry (@unlock/*, unlock-mcp)
+    result: no first-party package
+  - target: github.com/unlock-com
+    result: four repositories, none an MCP server
+  - target: https://www.unlock.com/.well-known/ai-plugin.json
+    result: 404
+tools:
+- name: list_active_states
+  description: List the US states where Unlock's home equity agreement is currently offered.
+  rest: [getUnlockV1ActiveStates]
+  api: Unlock Site Content API
+  read_only: true
+- name: get_company_profile
+  description: Retrieve Unlock's corporate blurb and headquarters address.
+  rest: [getUnlockV1Company]
+  api: Unlock Site Content API
+  read_only: true
+- name: search_faq
+  description: Search the 145-entry home equity agreement FAQ library, with category filtering.
+  rest: [getUnlockV1Faq, getUnlockV1FaqCategories]
+  api: Unlock Site Content API
+  read_only: true
+- name: get_faq_entry
+  description: Retrieve one FAQ entry by id.
+  rest: [getUnlockV1FaqById]
+  api: Unlock Site Content API
+  read_only: true
+- name: list_testimonials
+  description: List published homeowner testimonials.
+  rest: [getUnlockV1Testimonials]
+  api: Unlock Site Content API
+  read_only: true
+- name: browse_education
+  description: Browse the Unlock Learn curriculum — lessons and their topics.
+  rest: [getUnlockV1Education, getUnlockV1EducationLessons, getUnlockV1EducationTopics]
+  api: Unlock Site Content API
+  read_only: true
+- name: get_legal_disclosures
+  description: Retrieve the published legal disclaimer and footer disclosures.
+  rest: [getUnlockV1Disclaimer, getUnlockV2Disclosures]
+  api: Unlock Site Content API
+  read_only: true
+- name: search_content
+  description: Cross-type search across posts, pages, articles, stories, lessons and topics.
+  rest: [getWpV2Search]
+  api: Unlock Editorial API
+  read_only: true
+- name: list_posts
+  description: List Unlock blog posts, filterable by category, date and search term.
+  rest: [getWpV2Posts]
+  api: Unlock Editorial API
+  read_only: true
+- name: get_post
+  description: Retrieve one blog post by id.
+  rest: [getWpV2PostsById]
+  api: Unlock Editorial API
+  read_only: true
+- name: list_articles
+  description: List long-form Unlock Learn articles.
+  rest: [getWpV2Articles]
+  api: Unlock Editorial API
+  read_only: true
+- name: list_homeowner_stories
+  description: List published homeowner success stories.
+  rest: [getWpV2Stories]
+  api: Unlock Editorial API
+  read_only: true

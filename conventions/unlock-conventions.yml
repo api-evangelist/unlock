@@ -1,0 +1,114 @@
+generated: '2026-09-02'
+method: probed
+source: >-
+  https://www.unlock.com/wp-json/ route index and live response headers observed 2026-09-02;
+  derived against openapi/unlock-site-content-api-openapi.yml and
+  openapi/unlock-editorial-api-openapi.yml
+note: >-
+  Unlock publishes no API documentation, so none of these conventions are stated by the provider —
+  each one was read off the live surface or off the server's own published route index. Nothing here
+  is a documented guarantee, and an integrator should treat it as observed behaviour of a WordPress
+  REST deployment rather than a contract Unlock has committed to.
+authentication:
+  anonymous_read: true
+  style: none for reads
+  write_scheme: WordPress application password (HTTP Basic)
+  authorize_url: https://www.unlock.com/wp/wp-admin/authorize-application.php
+  public_key_issuance: false
+  detail: >-
+    Every GET route profiled here answers without a credential and the origin returns `Allow: GET`
+    to anonymous callers. Writes exist on the same routes but need an application password, which
+    is issued only from the WordPress admin — there is no public signup for it.
+  see_also: authentication/unlock-authentication.yml
+pagination:
+  style: page-number
+  parameters:
+  - name: page
+    default: 1
+    minimum: 1
+  - name: per_page
+    default: 10
+    minimum: 1
+    maximum: 100
+  - name: offset
+    description: Skip a fixed number of items instead of paging.
+  response_fields: []
+  response_headers:
+  - X-WP-Total
+  - X-WP-TotalPages
+  - 'Link (rel="next" / rel="prev", RFC 8288)'
+  cors_exposed: 'Access-Control-Expose-Headers: X-WP-Total, X-WP-TotalPages, Link'
+  out_of_bounds: HTTP 400 rest_invalid_param with sub-code rest_out_of_bounds
+filtering_and_search:
+  parameters: [search, search_columns, search_semantics, include, exclude, slug, status, order, orderby, after, before, modified_after, modified_before]
+  cross_type_search: /wp/v2/search
+sparse_fieldsets:
+  supported: true
+  parameter: _fields
+  detail: WordPress core `_fields` trimming is available on collection and item routes.
+  verified: false
+  note: Advertised by WordPress core rather than by Unlock; not probed on this deployment.
+field_expansion:
+  supported: true
+  parameter: _embed
+  detail: '`_embed` inlines `_links` targets (author, featured media, terms) into `_embedded`.'
+  verified: false
+  note: Advertised by WordPress core rather than by Unlock; not probed on this deployment.
+context_scoping:
+  parameter: context
+  values: [view, embed, edit]
+  anonymous_allowed: [view, embed]
+  detail: context=edit returns HTTP 401 rest_forbidden_context to anonymous callers.
+versioning:
+  style: namespace-in-path
+  namespaces: [unlock/v1, unlock/v2, unlk/v1, wp/v2, oembed/1.0]
+  detail: >-
+    Versions are namespace segments, discoverable from the route index. unlock/v2 exists alongside
+    unlock/v1 and carries only /disclosures — the two are additive, not a migration.
+  see_also: lifecycle/unlock-lifecycle.yml
+error_envelope:
+  format: WordPress REST error object (not RFC 9457)
+  media_type: application/json
+  see_also: errors/unlock-problem-types.yml
+request_id_tracing:
+  supported: true
+  headers:
+  - name: X-Styx-Req-Id
+    detail: Per-request identifier emitted by the Pantheon edge, e.g. 78b729f2-a702-11f1-99dc-c2240e688c4a.
+  - name: X-Served-By
+    detail: Fastly cache node chain.
+  provider_owned: false
+  note: These are hosting-platform headers, not an Unlock-defined correlation id.
+caching:
+  cache_control: 'public, max-age=604800'
+  edge: Fastly in front of Pantheon
+  conditional_requests: not observed
+rate_limit_signaling:
+  headers_present: false
+  see_also: rate-limits/unlock-rate-limits.yml
+idempotency:
+  supported: na
+  detail: >-
+    There is no anonymous write surface, so idempotency has nothing to apply to. Anonymous callers
+    receive `Allow: GET`; the write methods in the route index require a WordPress application
+    password that Unlock does not issue publicly.
+dry_run_mode:
+  supported: na
+  detail: No write surface, so there is nothing to rehearse.
+reversibility:
+  grade: na
+  applicable: false
+  detail: >-
+    The public surface is read-only. No operation in either OpenAPI creates, updates or deletes
+    anything, so there is no action for an agent to take back and no reversal window to state.
+    Assessed `na` rather than zero: reversibility does not apply to this contract.
+  write_surfaces: []
+  reversal_operations: []
+  evidence:
+  - url: https://www.unlock.com/wp-json/wp/v2/posts?per_page=2
+    header: 'Allow: GET'
+    observed: '2026-09-02'
+  - url: https://www.unlock.com/wp-json/wp/v2/posts?context=edit
+    status: 401
+    error_code: rest_forbidden_context
+    observed: '2026-09-02'

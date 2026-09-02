@@ -1,0 +1,83 @@
+generated: '2026-09-02'
+method: probed
+source: live HTTP probes of every host in apis.yml and openapi/ servers[]
+note: >-
+  Every named /.well-known/ path was probed on all four Unlock hosts and none returned a document.
+  www.unlock.com and support.unlock.com answer 404 with an HTML page; app.unlock.com is a Next.js
+  single-page app whose catch-all route answers 200 with the same 4.8KB HTML shell for every path,
+  which is a miss, not a hit; partners.unlock.com is a dangling Cloudflare hostname returning
+  530 (origin DNS error 1016) for every request. No WellKnown or SecurityTxt pointer is emitted,
+  because nothing here is served.
+hosts:
+- host: www.unlock.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /.well-known/aauth-resource.json
+    status: 404
+- host: app.unlock.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /.well-known/aauth-resource.json
+    status: 404
+- host: support.unlock.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /.well-known/aauth-resource.json
+    status: 404
+- host: partners.unlock.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 530
+  - path: /.well-known/openid-configuration
+    status: 530
+  - path: /.well-known/oauth-authorization-server
+    status: 530
+  - path: /.well-known/api-catalog
+    status: 530
+  - path: /.well-known/ai-plugin.json
+    status: 530
+  - path: /.well-known/agent-card.json
+    status: 530
+  - path: /.well-known/agent.json
+    status: 530
+  - path: /.well-known/aauth-resource.json
+    status: 530

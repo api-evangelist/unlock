@@ -1,0 +1,38 @@
+generated: '2026-09-02'
+method: searched
+source: https://www.unlock.com/what-it-costs/
+plan_count: 0
+note: >-
+  Unlock publishes no API plans, tiers, quotas or developer pricing, because it runs no developer
+  program: the two REST surfaces profiled here are the anonymous content API behind its marketing
+  site and carry no signup, key issuance or metering. What the company does publish is consumer
+  pricing for its home equity agreement, recorded below under consumer_product_pricing so the
+  commercial terms are not lost — these are the terms of a financial product sold to homeowners,
+  NOT an API price list, and they must never be read as API plans.
+plans: []
+consumer_product_pricing:
+  product: Home Equity Agreement (HEA)
+  source: https://www.unlock.com/what-it-costs/
+  method: searched
+  currency: USD
+  terms:
+  - name: Origination fee
+    value: up to 4.9% of the lump sum received
+  - name: Minimum investment
+    value: $15,000
+  - name: Maximum investment
+    value: $500,000
+  - name: Maximum property share
+    value: 49.9%
+  - name: Annualized return cap
+    value: 19.9% per year on Unlock's investment
+  - name: Term
+    value: up to 10 years
+  - name: Monthly payments
+    value: none during the term
+  - name: Third-party costs
+    value: home appraisal, title and escrow fees, credit and recording fees, paid to third parties
+  availability:
+    states: 26
+    source: https://www.unlock.com/wp-json/unlock/v1/active-states
+    list: [AL, AZ, CA, FL, HI, ID, IN, KY, MI, MO, MT, NV, NH, NJ, NM, NC, OH, OR, PA, SC, TN, UT, VT, VA, WI, WY]

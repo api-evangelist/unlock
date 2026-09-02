@@ -1,0 +1,177 @@
+generated: '2026-09-02'
+method: derived
+source: >-
+  examples/unlock-types.json and examples/unlock-taxonomies.json — the self-describing
+  /wp/v2/types and /wp/v2/taxonomies documents fetched from https://www.unlock.com/wp-json/
+  on 2026-09-02 — cross-checked against the two OpenAPI files in openapi/
+note: >-
+  The entity graph is not documented by Unlock; it is read from the deployment's own registration
+  metadata, which names every content type, its REST base, its namespace and the taxonomies bound
+  to it. Six of the eighteen registered types are Unlock's own editorial model (articles, authors,
+  stories, faq, lessons, topics) and two of those — faq and testimonials — are deliberately
+  registered into the first-party `unlock/v1` namespace rather than `wp/v2`. The remaining types
+  are WordPress site-building furniture (templates, patterns, fonts, global styles) and are listed
+  for completeness but are not part of the readable content surface.
+entities:
+- name: Post
+  type: post
+  rest_base: posts
+  namespace: wp/v2
+  path: /wp/v2/posts
+  count_at_capture: 251
+  hierarchical: false
+  description: Unlock blog posts across the Home Equity 101, Market Trends, Funding Your Goals and Homeownership categories.
+  relationships:
+  - has_many: Category
+    via: categories
+  - has_many: Tag
+    via: tags
+  - has_one: Media
+    via: featured_media
+- name: Article
+  type: articles
+  rest_base: articles
+  namespace: wp/v2
+  path: /wp/v2/articles
+  count_at_capture: 9
+  hierarchical: false
+  description: Long-form Unlock Learn articles.
+  relationships:
+  - has_many: EducationCategory
+    via: education_category
+- name: Story
+  type: stories
+  rest_base: stories
+  namespace: wp/v2
+  path: /wp/v2/stories
+  count_at_capture: 13
+  hierarchical: false
+  description: Homeowner success stories.
+  relationships: []
+- name: Author
+  type: authors
+  rest_base: authors
+  namespace: wp/v2
+  path: /wp/v2/authors
+  count_at_capture: 11
+  hierarchical: false
+  description: >-
+    Bylined contributors, registered as a content type of their own rather than as WordPress users,
+    so author pages are public content and not accounts.
+  relationships: []
+- name: Lesson
+  type: lessons
+  rest_base: lessons
+  namespace: wp/v2
+  path: /wp/v2/lessons
+  count_at_capture: 1
+  hierarchical: false
+  description: Unlock Learn lessons — the container a learner works through.
+  relationships:
+  - has_many: Topic
+    via: education_category
+  - has_many: EducationCategory
+    via: education_category
+- name: Topic
+  type: topics
+  rest_base: topics
+  namespace: wp/v2
+  path: /wp/v2/topics
+  count_at_capture: 6
+  hierarchical: false
+  description: Individual Unlock Learn topics; also projected through /unlock/v1/education/topics with a lesson back-reference.
+  relationships:
+  - belongs_to: Lesson
+    via: lesson
+    source: examples/unlock-education-topics.json
+  - has_many: EducationCategory
+    via: education_category
+- name: FAQ
+  type: faq
+  rest_base: faq
+  namespace: unlock/v1
+  path: /unlock/v1/faq
+  count_at_capture: 145
+  hierarchical: false
+  description: Home equity agreement questions and answers, registered into Unlock's own namespace.
+  relationships:
+  - has_many: FAQCategory
+    via: faq_categories
+- name: Testimonial
+  type: testimonials
+  rest_base: testimonials
+  namespace: unlock/v1
+  path: /unlock/v1/testimonials
+  count_at_capture: 8
+  hierarchical: false
+  description: Published homeowner testimonials, registered into Unlock's own namespace.
+  relationships: []
+- name: Page
+  type: page
+  rest_base: pages
+  namespace: wp/v2
+  path: /wp/v2/pages
+  count_at_capture: 24
+  hierarchical: true
+  description: Marketing and legal pages.
+  relationships:
+  - belongs_to: Page
+    via: parent
+- name: Media
+  type: attachment
+  rest_base: media
+  namespace: wp/v2
+  path: /wp/v2/media
+  count_at_capture: 778
+  hierarchical: false
+  description: Media library items referenced as featured images and inline assets.
+  relationships:
+  - belongs_to: Post
+    via: post
+taxonomies:
+- name: Category
+  slug: category
+  rest_base: categories
+  hierarchical: true
+  applies_to: [Post]
+- name: Tag
+  slug: post_tag
+  rest_base: tags
+  hierarchical: false
+  applies_to: [Post]
+  count_at_capture: 0
+- name: EducationCategory
+  slug: education_category
+  rest_base: education_category
+  hierarchical: true
+  applies_to: [Article, Lesson, Topic]
+- name: FAQCategory
+  slug: faq_categories
+  rest_base: faq_categories
+  hierarchical: true
+  applies_to: [FAQ]
+singletons:
+- name: Company
+  path: /unlock/v1/company
+  fields: [blurb, address]
+  description: Corporate blurb and the Tempe, Arizona headquarters address.
+- name: ActiveStates
+  path: /unlock/v1/active-states
+  fields: [active_states, count]
+  description: The 26 US states in which the home equity agreement is offered, with a count.
+- name: Social
+  path: /unlock/v1/social
+  fields: [facebook, twitter, instagram, linkedin, youtube, tiktok]
+- name: Logos
+  path: /unlock/v1/logos
+  fields: [footer_logo, bbb_logo, eho_logo]
+- name: Disclaimer
+  path: /unlock/v1/disclaimer
+- name: Disclosures
+  path: /unlock/v2/disclosures
+  note: Returns an HTML fragment, not JSON — the only non-JSON response on the surface.
+excluded_site_building_types:
+  note: >-
+    Registered on the deployment but not part of the readable content model; listed so the census
+    is complete and so nobody mistakes them for Unlock's domain.
+  types: [nav_menu_item, wp_block, wp_template, wp_template_part, wp_global_styles, wp_navigation, wp_font_family, wp_font_face]

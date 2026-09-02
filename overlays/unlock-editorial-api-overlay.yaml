@@ -1,0 +1,51 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements — Unlock Editorial API
+  version: 1.0.0
+extends: ../openapi/unlock-editorial-api-openapi.yml
+x-generated: '2026-09-02'
+x-method: generated
+x-source: >-
+  Derived from live probes of https://www.unlock.com/wp-json/ on 2026-09-02 and from
+  data-model/unlock-data-model.yml, conventions/unlock-conventions.yml and
+  errors/unlock-problem-types.yml in this repository.
+x-note: >-
+  API Evangelist annotations only. The base document is derived from the provider's own published
+  route index; nothing in either file is invented.
+actions:
+- target: $.info
+  description: Record profile provenance and the read-only nature of the anonymous surface.
+  update:
+    x-api-evangelist-profile: https://apis.io/provider/unlock
+    x-provider-documentation: none
+    x-anonymous-read: true
+    x-write-requires: WordPress application password (HTTP Basic)
+    x-verified-on: '2026-09-02'
+- target: $.info
+  description: Attach observed runtime conventions.
+  update:
+    x-pagination:
+      style: page-number
+      parameters: [page, per_page, offset]
+      per_page_max: 100
+      headers: [X-WP-Total, X-WP-TotalPages, Link]
+    x-caching:
+      cache_control: 'public, max-age=604800'
+      edge: Fastly in front of Pantheon
+    x-error-format: wordpress-rest-error
+    x-reversibility: na
+- target: $.paths['/wp/v2/posts'].get
+  description: Record the observed collection size and the custom types that sit alongside posts.
+  update:
+    x-collection-size-at-capture: 251
+    x-related-types: [articles, stories, lessons, topics, authors]
+- target: $.paths['/wp/v2/tags'].get
+  description: Warn that this taxonomy is registered but empty on this deployment.
+  update:
+    x-collection-size-at-capture: 0
+    x-response-note: Returns an empty array; Unlock categorises posts with `category`, not `post_tag`.
+- target: $.paths['/wp/v2/types'].get
+  description: Point at the saved discovery document that the data model was derived from.
+  update:
+    x-example-response: ../examples/unlock-types.json
+    x-derived-artifact: ../data-model/unlock-data-model.yml

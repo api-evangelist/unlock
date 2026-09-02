@@ -1,0 +1,49 @@
+generated: '2026-09-02'
+method: searched
+source: npm registry, PyPI, RubyGems, Packagist, crates.io, NuGet, pkg.go.dev, Maven Central, and https://github.com/unlock-com
+package_count: 0
+note: >-
+  Unlock publishes no client libraries. The registries were searched for a first-party Unlock
+  Technologies SDK and none exists; the company's GitHub organisation, github.com/unlock-com
+  (created 2020-12-31, blog unlock.com, four public repositories), contains no SDK either — an
+  archived fork of singer-io/tap-outreach, a WordPress block library, a fork of composer/satis, and
+  a GitHub Pages Satis index for a PRIVATE Composer repository whose packages are not published.
+  The "unlock" name on npm and Packagist is occupied by unrelated projects, chiefly Unlock Protocol
+  (unlock-protocol.com), a different company; nothing under it is attributed to Unlock Technologies.
+  No SDKs pointer is emitted.
+packages: []
+github_organization:
+  url: https://github.com/unlock-com
+  name: Unlock
+  blog: unlock.com
+  created: '2020-12-31'
+  public_repos: 4
+  repositories:
+  - name: tap-outreach
+    fork_of: singer-io/tap-outreach
+    archived: true
+    last_push: '2021-06-28'
+    version: null
+    published: null
+    note: Archived fork of the Singer Outreach tap. Not published to any registry.
+  - name: blocks
+    fork: false
+    archived: false
+    last_push: '2024-12-13'
+    version: null
+    published: null
+    note: WordPress block library for the unlock.com site. Not published to any registry.
+  - name: satis
+    fork_of: composer/satis
+    version: null
+    published: null
+    note: Fork of the Composer static-repository generator.
+  - name: unlock-com.github.io
+    description: Private Satis Repository
+    last_push: '2026-09-01'
+    version: null
+    published: null
+    note: >-
+      GitHub Pages host for a private Composer repository index. Actively pushed, but the packages
+      it indexes are private; https://unlock-com.github.io/packages.json 301s and serves nothing
+      public.

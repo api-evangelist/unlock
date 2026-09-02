@@ -1,0 +1,17 @@
+generated: '2026-09-02'
+method: derived
+source: openapi/unlock-editorial-api-openapi.yml, openapi/unlock-site-content-api-openapi.yml
+summary:
+  types:
+  - http
+schemes:
+- name: applicationPassword
+  type: http
+  scheme: basic
+  description: WordPress application password (HTTP Basic). Advertised by this deployment at
+    https://www.unlock.com/wp/wp-admin/authorize-application.php in the `authentication` block
+    of the route index. It gates the write methods on these routes; every operation documented
+    here is anonymous read and requires no credential.
+  sources:
+  - openapi/unlock-editorial-api-openapi.yml
+  - openapi/unlock-site-content-api-openapi.yml

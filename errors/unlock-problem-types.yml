@@ -1,0 +1,70 @@
+generated: '2026-09-02'
+method: probed
+source: >-
+  Live error responses from https://www.unlock.com/wp-json/ observed 2026-09-02, cross-checked
+  against openapi/unlock-site-content-api-openapi.yml and openapi/unlock-editorial-api-openapi.yml
+format: wordpress-rest-error
+rfc9457: false
+note: >-
+  Unlock publishes no error reference — there is no developer documentation for this surface — so
+  every entry below was produced by deliberately provoking the error against a live, unauthenticated
+  request and recording exactly what came back. The envelope is the WordPress REST error object
+  (`code`, `message`, `data.status`, optionally `data.params` and `data.details`), served as
+  application/json. It is NOT RFC 9457 application/problem+json: there is no `type` URI, no `title`
+  and no `instance`, so an agent cannot dereference an error to documentation.
+envelope:
+  media_type: application/json
+  fields:
+  - name: code
+    type: string
+    description: Machine-readable error identifier, stable across WordPress deployments.
+  - name: message
+    type: string
+    description: Human-readable message; not localized on this deployment.
+  - name: data.status
+    type: integer
+    description: Repeats the HTTP status code inside the body.
+  - name: data.params
+    type: object|array
+    description: Present on parameter errors; names the offending parameters.
+  - name: data.details
+    type: object
+    description: Present on validation errors; per-parameter sub-code and message.
+problem_types:
+- code: rest_no_route
+  status: 404
+  title: No route matched
+  detail: No route was found matching the URL and request method.
+  remediation: >-
+    Re-read the route index at https://www.unlock.com/wp-json/ — namespaces are unlock/v1,
+    unlock/v2, unlk/v1 and wp/v2, and paths are case- and prefix-sensitive.
+  observed_at: https://www.unlock.com/wp-json/unlock/v1/nope
+- code: rest_post_invalid_id
+  status: 404
+  title: Invalid post ID
+  detail: Invalid post ID.
+  remediation: List the collection first and use an id returned by it; ids are per-post-type.
+  observed_at: https://www.unlock.com/wp-json/wp/v2/posts/1
+- code: rest_invalid_param
+  status: 400
+  title: Invalid parameter
+  detail: 'Invalid parameter(s): per_page'
+  sub_codes:
+  - code: rest_out_of_bounds
+    detail: per_page must be between 1 (inclusive) and 100 (inclusive)
+  remediation: Clamp per_page to 1..100 and page through with the Link rel="next" header.
+  observed_at: https://www.unlock.com/wp-json/wp/v2/posts?per_page=999
+- code: rest_missing_callback_param
+  status: 400
+  title: Missing required parameter
+  detail: 'Missing parameter(s): email'
+  remediation: Supply every parameter the route index marks required:true.
+  observed_at: https://www.unlock.com/wp-json/unlk/v1/education/restore
+- code: rest_forbidden_context
+  status: 401
+  title: Context not permitted
+  detail: Sorry, you are not allowed to edit posts in this post type.
+  remediation: >-
+    Anonymous callers may only use context=view or context=embed. context=edit, and every write
+    method, requires a WordPress application password, which Unlock does not issue to the public.
+  observed_at: https://www.unlock.com/wp-json/wp/v2/posts?context=edit
