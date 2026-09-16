@@ -24,6 +24,17 @@ created: '2026-09-02'
 modified: '2026-09-02'
 tags:
 - Company
+- Financial-Services
+- Fintech
+- Home Equity
+- Mortgage
+- Real-Estate
+- Consumer Lending
+- Home Equity Agreement
+- Personal Finance
+- Content
+tags_raw:
+- Company
 - Financial Services
 - FinTech
 - Home Equity
@@ -34,29 +45,16 @@ tags:
 - Personal Finance
 - Content
 apis:
-- aid: unlock:unlock-site-content-api
-  name: Unlock Site Content API
-  description: >-
-    The first-party REST namespaces Unlock registers on www.unlock.com — `unlock/v1`, `unlock/v2` and
-    `unlk/v1`. These are custom endpoints written for Unlock, not WordPress core routes, and they
-    serve the company blurb and Tempe address, the 26 active states where the HEA is offered, legal
-    disclaimers and footer disclosures, social profiles, logo assets, navigation menus by location,
-    145 FAQ entries and their categories, 8 homeowner testimonials, and the Unlock Learn curriculum.
-    Anonymous access is read-only and needs no credential; the write methods the route index also
-    advertises require a WordPress application password.
+- aid: unlock:unlock-articles-api
+  name: Unlock Articles API
+  description: Long-form Learn articles (custom post type).
   humanURL: https://www.unlock.com/wp-json/unlock/v1
   baseURL: https://www.unlock.com/wp-json
   tags:
-  - Company
-  - FAQ
-  - Testimonials
-  - Education
-  - Content
+  - Articles
   properties:
   - type: OpenAPI
-    url: openapi/unlock-site-content-api-openapi.yml
-  - type: Overlay
-    url: overlays/unlock-site-content-api-overlay.yaml
+    url: openapi/unlock-articles-api-openapi.yml
   - type: Examples
     url: examples/unlock-active-states.json
   - type: Examples
@@ -73,29 +71,518 @@ apis:
     url: examples/unlock-education-lessons.json
   - type: Examples
     url: examples/unlock-menus-primary.json
-- aid: unlock:unlock-editorial-api
-  name: Unlock Editorial API
+  - type: Examples
+    url: examples/unlock-types.json
+  - type: Examples
+    url: examples/unlock-taxonomies.json
+  - type: Examples
+    url: examples/unlock-statuses.json
+  - type: Examples
+    url: examples/unlock-categories.json
+- aid: unlock:unlock-authors-api
+  name: Unlock Authors API
+  description: Bylined contributors (custom post type).
+  humanURL: https://www.unlock.com/wp-json/unlock/v1
+  baseURL: https://www.unlock.com/wp-json
+  tags:
+  - Authors
+  properties:
+  - type: OpenAPI
+    url: openapi/unlock-authors-api-openapi.yml
+  - type: Examples
+    url: examples/unlock-active-states.json
+  - type: Examples
+    url: examples/unlock-company.json
+  - type: Examples
+    url: examples/unlock-social.json
+  - type: Examples
+    url: examples/unlock-logos.json
+  - type: Examples
+    url: examples/unlock-faq-categories.json
+  - type: Examples
+    url: examples/unlock-education-topics.json
+  - type: Examples
+    url: examples/unlock-education-lessons.json
+  - type: Examples
+    url: examples/unlock-menus-primary.json
+  - type: Examples
+    url: examples/unlock-types.json
+  - type: Examples
+    url: examples/unlock-taxonomies.json
+  - type: Examples
+    url: examples/unlock-statuses.json
+  - type: Examples
+    url: examples/unlock-categories.json
+- aid: unlock:unlock-company-api
+  name: Unlock Company API
   description: >-
-    Anonymous read access to the Unlock editorial archive through the WordPress core `wp/v2`
-    namespace — 251 blog posts, 24 pages, 778 media items, 9 Learn articles, 13 homeowner stories,
-    6 education topics, 1 lesson and 11 bylined authors, plus the categories, tags and
-    education-category taxonomies, cross-type search, and the self-describing type and status
-    metadata. Read-only without credentials.
-  humanURL: https://www.unlock.com/wp-json/wp/v2
+    Corporate facts Unlock publishes for its own site: company blurb, social profiles, logo assets, legal
+    disclaimers and the list of states where the HEA is offered.
+  humanURL: https://www.unlock.com/wp-json/unlock/v1
+  baseURL: https://www.unlock.com/wp-json
+  tags:
+  - Company
+  properties:
+  - type: OpenAPI
+    url: openapi/unlock-company-api-openapi.yml
+  - type: Examples
+    url: examples/unlock-active-states.json
+  - type: Examples
+    url: examples/unlock-company.json
+  - type: Examples
+    url: examples/unlock-social.json
+  - type: Examples
+    url: examples/unlock-logos.json
+  - type: Examples
+    url: examples/unlock-faq-categories.json
+  - type: Examples
+    url: examples/unlock-education-topics.json
+  - type: Examples
+    url: examples/unlock-education-lessons.json
+  - type: Examples
+    url: examples/unlock-menus-primary.json
+  - type: Examples
+    url: examples/unlock-types.json
+  - type: Examples
+    url: examples/unlock-taxonomies.json
+  - type: Examples
+    url: examples/unlock-statuses.json
+  - type: Examples
+    url: examples/unlock-categories.json
+- aid: unlock:unlock-discovery-api
+  name: Unlock Discovery API
+  description: 'Self-describing metadata: registered content types and post statuses.'
+  humanURL: https://www.unlock.com/wp-json/unlock/v1
+  baseURL: https://www.unlock.com/wp-json
+  tags:
+  - Discovery
+  properties:
+  - type: OpenAPI
+    url: openapi/unlock-discovery-api-openapi.yml
+  - type: Examples
+    url: examples/unlock-active-states.json
+  - type: Examples
+    url: examples/unlock-company.json
+  - type: Examples
+    url: examples/unlock-social.json
+  - type: Examples
+    url: examples/unlock-logos.json
+  - type: Examples
+    url: examples/unlock-faq-categories.json
+  - type: Examples
+    url: examples/unlock-education-topics.json
+  - type: Examples
+    url: examples/unlock-education-lessons.json
+  - type: Examples
+    url: examples/unlock-menus-primary.json
+  - type: Examples
+    url: examples/unlock-types.json
+  - type: Examples
+    url: examples/unlock-taxonomies.json
+  - type: Examples
+    url: examples/unlock-statuses.json
+  - type: Examples
+    url: examples/unlock-categories.json
+- aid: unlock:unlock-education-api
+  name: Unlock Education API
+  description: The Unlock Learn curriculum — lessons, topics and per-learner progress.
+  humanURL: https://www.unlock.com/wp-json/unlock/v1
+  baseURL: https://www.unlock.com/wp-json
+  tags:
+  - Education
+  properties:
+  - type: OpenAPI
+    url: openapi/unlock-education-api-openapi.yml
+  - type: Examples
+    url: examples/unlock-active-states.json
+  - type: Examples
+    url: examples/unlock-company.json
+  - type: Examples
+    url: examples/unlock-social.json
+  - type: Examples
+    url: examples/unlock-logos.json
+  - type: Examples
+    url: examples/unlock-faq-categories.json
+  - type: Examples
+    url: examples/unlock-education-topics.json
+  - type: Examples
+    url: examples/unlock-education-lessons.json
+  - type: Examples
+    url: examples/unlock-menus-primary.json
+  - type: Examples
+    url: examples/unlock-types.json
+  - type: Examples
+    url: examples/unlock-taxonomies.json
+  - type: Examples
+    url: examples/unlock-statuses.json
+  - type: Examples
+    url: examples/unlock-categories.json
+- aid: unlock:unlock-faq-api
+  name: Unlock FAQ API
+  description: Home equity agreement questions and answers, and their categories.
+  humanURL: https://www.unlock.com/wp-json/unlock/v1
+  baseURL: https://www.unlock.com/wp-json
+  tags:
+  - FAQ
+  properties:
+  - type: OpenAPI
+    url: openapi/unlock-faq-api-openapi.yml
+  - type: Examples
+    url: examples/unlock-active-states.json
+  - type: Examples
+    url: examples/unlock-company.json
+  - type: Examples
+    url: examples/unlock-social.json
+  - type: Examples
+    url: examples/unlock-logos.json
+  - type: Examples
+    url: examples/unlock-faq-categories.json
+  - type: Examples
+    url: examples/unlock-education-topics.json
+  - type: Examples
+    url: examples/unlock-education-lessons.json
+  - type: Examples
+    url: examples/unlock-menus-primary.json
+  - type: Examples
+    url: examples/unlock-types.json
+  - type: Examples
+    url: examples/unlock-taxonomies.json
+  - type: Examples
+    url: examples/unlock-statuses.json
+  - type: Examples
+    url: examples/unlock-categories.json
+- aid: unlock:unlock-lessons-api
+  name: Unlock Lessons API
+  description: Unlock Learn lessons (custom post type).
+  humanURL: https://www.unlock.com/wp-json/unlock/v1
+  baseURL: https://www.unlock.com/wp-json
+  tags:
+  - Lessons
+  properties:
+  - type: OpenAPI
+    url: openapi/unlock-lessons-api-openapi.yml
+  - type: Examples
+    url: examples/unlock-active-states.json
+  - type: Examples
+    url: examples/unlock-company.json
+  - type: Examples
+    url: examples/unlock-social.json
+  - type: Examples
+    url: examples/unlock-logos.json
+  - type: Examples
+    url: examples/unlock-faq-categories.json
+  - type: Examples
+    url: examples/unlock-education-topics.json
+  - type: Examples
+    url: examples/unlock-education-lessons.json
+  - type: Examples
+    url: examples/unlock-menus-primary.json
+  - type: Examples
+    url: examples/unlock-types.json
+  - type: Examples
+    url: examples/unlock-taxonomies.json
+  - type: Examples
+    url: examples/unlock-statuses.json
+  - type: Examples
+    url: examples/unlock-categories.json
+- aid: unlock:unlock-media-api
+  name: Unlock Media API
+  description: Media library items.
+  humanURL: https://www.unlock.com/wp-json/unlock/v1
+  baseURL: https://www.unlock.com/wp-json
+  tags:
+  - Media
+  properties:
+  - type: OpenAPI
+    url: openapi/unlock-media-api-openapi.yml
+  - type: Examples
+    url: examples/unlock-active-states.json
+  - type: Examples
+    url: examples/unlock-company.json
+  - type: Examples
+    url: examples/unlock-social.json
+  - type: Examples
+    url: examples/unlock-logos.json
+  - type: Examples
+    url: examples/unlock-faq-categories.json
+  - type: Examples
+    url: examples/unlock-education-topics.json
+  - type: Examples
+    url: examples/unlock-education-lessons.json
+  - type: Examples
+    url: examples/unlock-menus-primary.json
+  - type: Examples
+    url: examples/unlock-types.json
+  - type: Examples
+    url: examples/unlock-taxonomies.json
+  - type: Examples
+    url: examples/unlock-statuses.json
+  - type: Examples
+    url: examples/unlock-categories.json
+- aid: unlock:unlock-navigation-api
+  name: Unlock Navigation API
+  description: Site navigation menus by location.
+  humanURL: https://www.unlock.com/wp-json/unlock/v1
+  baseURL: https://www.unlock.com/wp-json
+  tags:
+  - Navigation
+  properties:
+  - type: OpenAPI
+    url: openapi/unlock-navigation-api-openapi.yml
+  - type: Examples
+    url: examples/unlock-active-states.json
+  - type: Examples
+    url: examples/unlock-company.json
+  - type: Examples
+    url: examples/unlock-social.json
+  - type: Examples
+    url: examples/unlock-logos.json
+  - type: Examples
+    url: examples/unlock-faq-categories.json
+  - type: Examples
+    url: examples/unlock-education-topics.json
+  - type: Examples
+    url: examples/unlock-education-lessons.json
+  - type: Examples
+    url: examples/unlock-menus-primary.json
+  - type: Examples
+    url: examples/unlock-types.json
+  - type: Examples
+    url: examples/unlock-taxonomies.json
+  - type: Examples
+    url: examples/unlock-statuses.json
+  - type: Examples
+    url: examples/unlock-categories.json
+- aid: unlock:unlock-pages-api
+  name: Unlock Pages API
+  description: Site pages.
+  humanURL: https://www.unlock.com/wp-json/unlock/v1
+  baseURL: https://www.unlock.com/wp-json
+  tags:
+  - Pages
+  properties:
+  - type: OpenAPI
+    url: openapi/unlock-pages-api-openapi.yml
+  - type: Examples
+    url: examples/unlock-active-states.json
+  - type: Examples
+    url: examples/unlock-company.json
+  - type: Examples
+    url: examples/unlock-social.json
+  - type: Examples
+    url: examples/unlock-logos.json
+  - type: Examples
+    url: examples/unlock-faq-categories.json
+  - type: Examples
+    url: examples/unlock-education-topics.json
+  - type: Examples
+    url: examples/unlock-education-lessons.json
+  - type: Examples
+    url: examples/unlock-menus-primary.json
+  - type: Examples
+    url: examples/unlock-types.json
+  - type: Examples
+    url: examples/unlock-taxonomies.json
+  - type: Examples
+    url: examples/unlock-statuses.json
+  - type: Examples
+    url: examples/unlock-categories.json
+- aid: unlock:unlock-posts-api
+  name: Unlock Posts API
+  description: Unlock blog posts.
+  humanURL: https://www.unlock.com/wp-json/unlock/v1
   baseURL: https://www.unlock.com/wp-json
   tags:
   - Posts
-  - Articles
-  - Stories
-  - Media
-  - Taxonomies
-  - Search
-  - Content
   properties:
   - type: OpenAPI
-    url: openapi/unlock-editorial-api-openapi.yml
-  - type: Overlay
-    url: overlays/unlock-editorial-api-overlay.yaml
+    url: openapi/unlock-posts-api-openapi.yml
+  - type: Examples
+    url: examples/unlock-active-states.json
+  - type: Examples
+    url: examples/unlock-company.json
+  - type: Examples
+    url: examples/unlock-social.json
+  - type: Examples
+    url: examples/unlock-logos.json
+  - type: Examples
+    url: examples/unlock-faq-categories.json
+  - type: Examples
+    url: examples/unlock-education-topics.json
+  - type: Examples
+    url: examples/unlock-education-lessons.json
+  - type: Examples
+    url: examples/unlock-menus-primary.json
+  - type: Examples
+    url: examples/unlock-types.json
+  - type: Examples
+    url: examples/unlock-taxonomies.json
+  - type: Examples
+    url: examples/unlock-statuses.json
+  - type: Examples
+    url: examples/unlock-categories.json
+- aid: unlock:unlock-search-api
+  name: Unlock Search API
+  description: Cross-type site search.
+  humanURL: https://www.unlock.com/wp-json/unlock/v1
+  baseURL: https://www.unlock.com/wp-json
+  tags:
+  - Search
+  properties:
+  - type: OpenAPI
+    url: openapi/unlock-search-api-openapi.yml
+  - type: Examples
+    url: examples/unlock-active-states.json
+  - type: Examples
+    url: examples/unlock-company.json
+  - type: Examples
+    url: examples/unlock-social.json
+  - type: Examples
+    url: examples/unlock-logos.json
+  - type: Examples
+    url: examples/unlock-faq-categories.json
+  - type: Examples
+    url: examples/unlock-education-topics.json
+  - type: Examples
+    url: examples/unlock-education-lessons.json
+  - type: Examples
+    url: examples/unlock-menus-primary.json
+  - type: Examples
+    url: examples/unlock-types.json
+  - type: Examples
+    url: examples/unlock-taxonomies.json
+  - type: Examples
+    url: examples/unlock-statuses.json
+  - type: Examples
+    url: examples/unlock-categories.json
+- aid: unlock:unlock-stories-api
+  name: Unlock Stories API
+  description: Homeowner success stories (custom post type).
+  humanURL: https://www.unlock.com/wp-json/unlock/v1
+  baseURL: https://www.unlock.com/wp-json
+  tags:
+  - Stories
+  properties:
+  - type: OpenAPI
+    url: openapi/unlock-stories-api-openapi.yml
+  - type: Examples
+    url: examples/unlock-active-states.json
+  - type: Examples
+    url: examples/unlock-company.json
+  - type: Examples
+    url: examples/unlock-social.json
+  - type: Examples
+    url: examples/unlock-logos.json
+  - type: Examples
+    url: examples/unlock-faq-categories.json
+  - type: Examples
+    url: examples/unlock-education-topics.json
+  - type: Examples
+    url: examples/unlock-education-lessons.json
+  - type: Examples
+    url: examples/unlock-menus-primary.json
+  - type: Examples
+    url: examples/unlock-types.json
+  - type: Examples
+    url: examples/unlock-taxonomies.json
+  - type: Examples
+    url: examples/unlock-statuses.json
+  - type: Examples
+    url: examples/unlock-categories.json
+- aid: unlock:unlock-taxonomies-api
+  name: Unlock Taxonomies API
+  description: Content taxonomies and their terms.
+  humanURL: https://www.unlock.com/wp-json/unlock/v1
+  baseURL: https://www.unlock.com/wp-json
+  tags:
+  - Taxonomies
+  properties:
+  - type: OpenAPI
+    url: openapi/unlock-taxonomies-api-openapi.yml
+  - type: Examples
+    url: examples/unlock-active-states.json
+  - type: Examples
+    url: examples/unlock-company.json
+  - type: Examples
+    url: examples/unlock-social.json
+  - type: Examples
+    url: examples/unlock-logos.json
+  - type: Examples
+    url: examples/unlock-faq-categories.json
+  - type: Examples
+    url: examples/unlock-education-topics.json
+  - type: Examples
+    url: examples/unlock-education-lessons.json
+  - type: Examples
+    url: examples/unlock-menus-primary.json
+  - type: Examples
+    url: examples/unlock-types.json
+  - type: Examples
+    url: examples/unlock-taxonomies.json
+  - type: Examples
+    url: examples/unlock-statuses.json
+  - type: Examples
+    url: examples/unlock-categories.json
+- aid: unlock:unlock-testimonials-api
+  name: Unlock Testimonials API
+  description: Published homeowner testimonials.
+  humanURL: https://www.unlock.com/wp-json/unlock/v1
+  baseURL: https://www.unlock.com/wp-json
+  tags:
+  - Testimonials
+  properties:
+  - type: OpenAPI
+    url: openapi/unlock-testimonials-api-openapi.yml
+  - type: Examples
+    url: examples/unlock-active-states.json
+  - type: Examples
+    url: examples/unlock-company.json
+  - type: Examples
+    url: examples/unlock-social.json
+  - type: Examples
+    url: examples/unlock-logos.json
+  - type: Examples
+    url: examples/unlock-faq-categories.json
+  - type: Examples
+    url: examples/unlock-education-topics.json
+  - type: Examples
+    url: examples/unlock-education-lessons.json
+  - type: Examples
+    url: examples/unlock-menus-primary.json
+  - type: Examples
+    url: examples/unlock-types.json
+  - type: Examples
+    url: examples/unlock-taxonomies.json
+  - type: Examples
+    url: examples/unlock-statuses.json
+  - type: Examples
+    url: examples/unlock-categories.json
+- aid: unlock:unlock-topics-api
+  name: Unlock Topics API
+  description: Unlock Learn topics (custom post type).
+  humanURL: https://www.unlock.com/wp-json/unlock/v1
+  baseURL: https://www.unlock.com/wp-json
+  tags:
+  - Topics
+  properties:
+  - type: OpenAPI
+    url: openapi/unlock-topics-api-openapi.yml
+  - type: Examples
+    url: examples/unlock-active-states.json
+  - type: Examples
+    url: examples/unlock-company.json
+  - type: Examples
+    url: examples/unlock-social.json
+  - type: Examples
+    url: examples/unlock-logos.json
+  - type: Examples
+    url: examples/unlock-faq-categories.json
+  - type: Examples
+    url: examples/unlock-education-topics.json
+  - type: Examples
+    url: examples/unlock-education-lessons.json
+  - type: Examples
+    url: examples/unlock-menus-primary.json
   - type: Examples
     url: examples/unlock-types.json
   - type: Examples
@@ -110,6 +597,10 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: Overlay
+  url: overlays/unlock-site-content-api-overlay.yaml
+- type: Overlay
+  url: overlays/unlock-editorial-api-overlay.yaml
 - type: Website
   url: https://www.unlock.com/
 - type: About
