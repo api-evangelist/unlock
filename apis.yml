@@ -495,6 +495,8 @@ apis:
   humanURL: https://www.unlock.com/wp-json/unlock/v1
   baseURL: https://www.unlock.com/wp-json
   tags:
+  - taxonomies
+  tags_raw:
   - Taxonomies
   properties:
   - type: OpenAPI
@@ -563,6 +565,8 @@ apis:
   humanURL: https://www.unlock.com/wp-json/unlock/v1
   baseURL: https://www.unlock.com/wp-json
   tags:
+  - Topic
+  tags_raw:
   - Topics
   properties:
   - type: OpenAPI
