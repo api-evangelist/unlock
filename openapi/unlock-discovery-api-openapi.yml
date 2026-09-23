@@ -1,0 +1,449 @@
+openapi: 3.2.0
+info:
+  title: Unlock Discovery API
+  contact:
+    name: Unlock Technologies
+    url: https://www.unlock.com/about/
+  x-refined-note:
+  - x-api-evangelist-note differs across the merged source definitions and was not carried
+  x-derived-from: https://www.unlock.com/wp-json/ (WordPress REST route index, fetched 2026-09-02)
+  x-derived-on: '2026-09-02'
+  x-verified-on: '2026-09-02'
+  version: '1.0'
+  description: 'Operations tagged Discovery across 2 of this provider''s published API definitions: unlock-editorial-api-openapi.yml, unlock-site-content-api-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://www.unlock.com/wp-json
+  description: Unlock WordPress REST API (www.unlock.com)
+security: []
+tags:
+- name: Discovery
+  description: 'Self-describing metadata: registered content types and post statuses.'
+paths:
+  /wp/v2:
+    get:
+      operationId: getWpV2
+      summary: List v2
+      description: Read the `/wp/v2` route in the `wp/v2` namespace. Parameters below are the server's own published argument schema from the WordPress REST route index.
+      tags:
+      - Discovery
+      responses:
+        '200':
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                type:
+                - object
+                - array
+        '400':
+          description: Invalid parameter (`rest_invalid_param`).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Authentication required for this scope (`rest_forbidden_context`).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: No route or resource matched (`rest_no_route` / `rest_post_invalid_id`).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      parameters:
+      - name: namespace
+        in: query
+        required: false
+        schema:
+          default: wp/v2
+      - name: context
+        in: query
+        required: false
+        schema:
+          default: view
+    servers:
+    - url: https://www.unlock.com/wp-json
+      description: Unlock WordPress REST API (www.unlock.com)
+  /wp/v2/statuses:
+    get:
+      operationId: getWpV2Statuses
+      summary: List v2 statuses
+      description: Read the `/wp/v2/statuses` route in the `wp/v2` namespace. Parameters below are the server's own published argument schema from the WordPress REST route index.
+      tags:
+      - Discovery
+      responses:
+        '200':
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                type:
+                - object
+                - array
+        '400':
+          description: Invalid parameter (`rest_invalid_param`).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Authentication required for this scope (`rest_forbidden_context`).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: No route or resource matched (`rest_no_route` / `rest_post_invalid_id`).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      parameters:
+      - name: context
+        in: query
+        required: false
+        description: Scope under which the request is made; determines fields present in response.
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+    servers:
+    - url: https://www.unlock.com/wp-json
+      description: Unlock WordPress REST API (www.unlock.com)
+  /wp/v2/statuses/{status}:
+    get:
+      operationId: getWpV2StatusesByStatus
+      summary: Retrieve a single v2 statuses by status
+      description: Read the `/wp/v2/statuses/(?P[\w-]+)` route in the `wp/v2` namespace. Parameters below are the server's own published argument schema from the WordPress REST route index.
+      tags:
+      - Discovery
+      responses:
+        '200':
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                type:
+                - object
+                - array
+        '400':
+          description: Invalid parameter (`rest_invalid_param`).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Authentication required for this scope (`rest_forbidden_context`).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: No route or resource matched (`rest_no_route` / `rest_post_invalid_id`).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      parameters:
+      - name: status
+        in: path
+        required: true
+        description: An alphanumeric identifier for the status.
+        schema:
+          type: string
+      - name: context
+        in: query
+        required: false
+        description: Scope under which the request is made; determines fields present in response.
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+    servers:
+    - url: https://www.unlock.com/wp-json
+      description: Unlock WordPress REST API (www.unlock.com)
+  /wp/v2/types:
+    get:
+      operationId: getWpV2Types
+      summary: List v2 types
+      description: Read the `/wp/v2/types` route in the `wp/v2` namespace. Parameters below are the server's own published argument schema from the WordPress REST route index.
+      tags:
+      - Discovery
+      responses:
+        '200':
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                type:
+                - object
+                - array
+        '400':
+          description: Invalid parameter (`rest_invalid_param`).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Authentication required for this scope (`rest_forbidden_context`).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: No route or resource matched (`rest_no_route` / `rest_post_invalid_id`).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      parameters:
+      - name: context
+        in: query
+        required: false
+        description: Scope under which the request is made; determines fields present in response.
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+    servers:
+    - url: https://www.unlock.com/wp-json
+      description: Unlock WordPress REST API (www.unlock.com)
+  /wp/v2/types/{type}:
+    get:
+      operationId: getWpV2TypesByType
+      summary: Retrieve a single v2 types by type
+      description: Read the `/wp/v2/types/(?P[\w-]+)` route in the `wp/v2` namespace. Parameters below are the server's own published argument schema from the WordPress REST route index.
+      tags:
+      - Discovery
+      responses:
+        '200':
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                type:
+                - object
+                - array
+        '400':
+          description: Invalid parameter (`rest_invalid_param`).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Authentication required for this scope (`rest_forbidden_context`).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: No route or resource matched (`rest_no_route` / `rest_post_invalid_id`).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      parameters:
+      - name: type
+        in: path
+        required: true
+        description: An alphanumeric identifier for the post type.
+        schema:
+          type: string
+      - name: context
+        in: query
+        required: false
+        description: Scope under which the request is made; determines fields present in response.
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+    servers:
+    - url: https://www.unlock.com/wp-json
+      description: Unlock WordPress REST API (www.unlock.com)
+  /unlk/v1:
+    get:
+      operationId: getUnlkV1
+      summary: List v1
+      description: Read the `/unlk/v1` route in the `unlk/v1` namespace. Parameters below are the server's own published argument schema from the WordPress REST route index.
+      tags:
+      - Discovery
+      responses:
+        '200':
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                type:
+                - object
+                - array
+        '400':
+          description: Invalid parameter (`rest_invalid_param`).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Authentication required for this scope (`rest_forbidden_context`).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: No route or resource matched (`rest_no_route` / `rest_post_invalid_id`).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      parameters:
+      - name: namespace
+        in: query
+        required: false
+        schema:
+          default: unlk/v1
+      - name: context
+        in: query
+        required: false
+        schema:
+          default: view
+    servers:
+    - url: https://www.unlock.com/wp-json
+      description: Unlock WordPress REST API (www.unlock.com)
+  /unlock/v1:
+    get:
+      operationId: getUnlockV1
+      summary: List v1
+      description: Read the `/unlock/v1` route in the `unlock/v1` namespace. Parameters below are the server's own published argument schema from the WordPress REST route index.
+      tags:
+      - Discovery
+      responses:
+        '200':
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                type:
+                - object
+                - array
+        '400':
+          description: Invalid parameter (`rest_invalid_param`).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Authentication required for this scope (`rest_forbidden_context`).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: No route or resource matched (`rest_no_route` / `rest_post_invalid_id`).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      parameters:
+      - name: namespace
+        in: query
+        required: false
+        schema:
+          default: unlock/v1
+      - name: context
+        in: query
+        required: false
+        schema:
+          default: view
+    servers:
+    - url: https://www.unlock.com/wp-json
+      description: Unlock WordPress REST API (www.unlock.com)
+  /unlock/v2:
+    get:
+      operationId: getUnlockV2
+      summary: List v2
+      description: Read the `/unlock/v2` route in the `unlock/v2` namespace. Parameters below are the server's own published argument schema from the WordPress REST route index.
+      tags:
+      - Discovery
+      responses:
+        '200':
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                type:
+                - object
+                - array
+        '400':
+          description: Invalid parameter (`rest_invalid_param`).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Authentication required for this scope (`rest_forbidden_context`).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: No route or resource matched (`rest_no_route` / `rest_post_invalid_id`).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      parameters:
+      - name: namespace
+        in: query
+        required: false
+        schema:
+          default: unlock/v2
+      - name: context
+        in: query
+        required: false
+        schema:
+          default: view
+    servers:
+    - url: https://www.unlock.com/wp-json
+      description: Unlock WordPress REST API (www.unlock.com)
+components:
+  schemas:
+    Error:
+      type: object
+      description: WordPress REST API error envelope, as returned by this deployment.
+      properties:
+        code:
+          type: string
+          description: Machine-readable error code, e.g. rest_no_route.
+        message:
+          type: string
+          description: Human-readable error message.
+        data:
+          type: object
+          properties:
+            status:
+              type: integer
+      required:
+      - code
+      - message
+  securitySchemes:
+    applicationPassword:
+      type: http
+      scheme: basic
+      description: WordPress application password (HTTP Basic). Advertised by this deployment at https://www.unlock.com/wp/wp-admin/authorize-application.php in the `authentication` block of the route index. It gates the write methods on these routes; every operation documented here is anonymous read and requires no credential.
+x-refined-from:
+- unlock-editorial-api-openapi.yml
+- unlock-site-content-api-openapi.yml

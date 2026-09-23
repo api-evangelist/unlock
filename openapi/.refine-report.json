@@ -1,0 +1,53 @@
+{
+  "provider": "unlock",
+  "sources": [
+    "_original/unlock-editorial-api-openapi.yml",
+    "_original/unlock-site-content-api-openapi.yml"
+  ],
+  "outputs": [
+    "unlock-articles-api-openapi.yml",
+    "unlock-authors-api-openapi.yml",
+    "unlock-discovery-api-openapi.yml",
+    "unlock-lessons-api-openapi.yml",
+    "unlock-media-api-openapi.yml",
+    "unlock-pages-api-openapi.yml",
+    "unlock-posts-api-openapi.yml",
+    "unlock-search-api-openapi.yml",
+    "unlock-stories-api-openapi.yml",
+    "unlock-taxonomies-api-openapi.yml",
+    "unlock-topics-api-openapi.yml",
+    "unlock-company-api-openapi.yml",
+    "unlock-education-api-openapi.yml",
+    "unlock-faq-api-openapi.yml",
+    "unlock-navigation-api-openapi.yml",
+    "unlock-testimonials-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [
+    "sourced from openapi/_original/ (2 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "unlock-editorial-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "unlock-site-content-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "tag 'Discovery' spans 2 source specs (unlock-editorial-api-openapi.yml, unlock-site-content-api-openapi.yml): per-path servers applied",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "unlock-articles-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "unlock-authors-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "unlock-company-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "unlock-discovery-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "unlock-education-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "unlock-faq-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "unlock-lessons-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "unlock-media-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "unlock-navigation-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "unlock-pages-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "unlock-posts-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "unlock-search-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "unlock-stories-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "unlock-taxonomies-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "unlock-testimonials-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "unlock-topics-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
+}

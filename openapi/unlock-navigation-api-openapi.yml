@@ -1,0 +1,86 @@
+openapi: 3.2.0
+info:
+  title: Unlock Site Content Navigation API
+  version: unlock/v1+v2
+  description: 'The first-party REST namespaces Unlock Technologies registers on www.unlock.com: `unlock/v1`, `unlock/v2` and `unlk/v1`.'
+  contact:
+    name: Unlock Technologies
+    url: https://www.unlock.com/about/
+  x-derived-from: https://www.unlock.com/wp-json/ (WordPress REST route index, fetched 2026-09-02)
+  x-derived-on: '2026-09-02'
+  x-api-evangelist-note: Third-party profile. Unlock Technologies publishes no developer program; this documents the anonymously readable first-party WordPress REST namespaces behind www.unlock.com. Every path and parameter here was read from the server's own published route index on 2026-09-02 — nothing is invented.
+  x-verified-on: '2026-09-02'
+servers:
+- url: https://www.unlock.com/wp-json
+  description: Unlock WordPress REST API (www.unlock.com)
+security: []
+tags:
+- name: Navigation
+  description: Site navigation menus by location.
+paths:
+  /unlock/v1/menus/{location}:
+    get:
+      operationId: getUnlockV1MenusByLocation
+      summary: Retrieve a single v1 menus by location
+      description: Read the `/unlock/v1/menus/(?P[a-z0-9_-]+)` route in the `unlock/v1` namespace. Parameters below are the server's own published argument schema from the WordPress REST route index.
+      tags:
+      - Navigation
+      responses:
+        '200':
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                type:
+                - object
+                - array
+        '400':
+          description: Invalid parameter (`rest_invalid_param`).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Authentication required for this scope (`rest_forbidden_context`).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: No route or resource matched (`rest_no_route` / `rest_post_invalid_id`).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      parameters:
+      - name: location
+        in: path
+        required: true
+        description: Resource identifier from the route pattern.
+        schema:
+          type: string
+components:
+  schemas:
+    Error:
+      type: object
+      description: WordPress REST API error envelope, as returned by this deployment.
+      properties:
+        code:
+          type: string
+          description: Machine-readable error code, e.g. rest_no_route.
+        message:
+          type: string
+          description: Human-readable error message.
+        data:
+          type: object
+          properties:
+            status:
+              type: integer
+      required:
+      - code
+      - message
+  securitySchemes:
+    applicationPassword:
+      type: http
+      scheme: basic
+      description: WordPress application password (HTTP Basic). Advertised by this deployment at https://www.unlock.com/wp/wp-admin/authorize-application.php in the `authentication` block of the route index. It gates the write methods on these routes; every operation documented here is anonymous read and requires no credential.
